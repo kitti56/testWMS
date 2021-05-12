@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>Example Leaflet Add WMS From GeoServer</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css">
+  </head> 
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    html, body, #map {
+      height: 100%;
+    }
+  </style>
+  <body>
+    <div id="map"></div>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script>
+    var map = new L.Map('map', { center: new L.LatLng(15.38829,99.62883), 
+                                zoom: 10, 
+                                attributionControl:true, 
+                                zoomControl:false,
+                                minZoom:6});
+    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  	var osm = new L.TileLayer(osmUrl,
+                              {minZoom: 8, 
+                               maxZoom: 18, 
+                               attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'});
+    map.addLayer(osm);
+	
+    var wmsLayer1= L.tileLayer.wms("http://35.168.112.93:8080/geoserver/Ricult_test/wms", {
+        layers: '	Ricult_test:crop_scan_cassava_april_uthai',
+        format: 'image/png',
+        transparent: true
+    });
+    map.addLayer(wmsLayer1);
+
+    </script>
+</html>
